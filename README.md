@@ -74,3 +74,30 @@ Windows server Powershell configuration script enabling Ansible using ports 5985
 *note: Edit password of technical user before running script
 
 Manually disable Windows Updates:
+
+
+## Run Ansible Playbook
+
+### Playbook dry run
+
+In dry-run (using --check option) the playbook contains only one task:
+
+1. List updates available.
+
+```
+ansible-playbook /etc/ansible/windows-update.yml --check
+```
+
+### Running playbook
+
+Playbook contains 3 tasks performing the actual windows update:
+1. Checking for updates. 
+2. Install updates (Only if some updates are found)
+3. Reboot with waiting (if required) - When updates are installed
+	* Waiting time can be changed in playbook according to server performance
+
+```
+sudo ansible-playbook /etc/ansible/windows-update.yml
+```
+
+
