@@ -1,0 +1,24 @@
+- hosts: winservers
+  any_errors_fatal: false
+  serial:
+   - 1
+   - 5%
+   - 25%
+  max_fail_percentage: 10%
+  vars:
+	win_updates_categories:
+  	- CriticalUpdates
+  	- SecurityUpdates
+  tasks:
+  # Check if there are missing updates
+  - name: Check for missing updates.
+	win_updates:
+  	state: searched
+  	category_names: "{{ win_updates_categories }}"
+  	log_path: C:\Ansible_log\log.txt
+	ignore_errors: ye
+	register: update
+ 
+  - name: Show updates available
+	debug:
+    	var: update
