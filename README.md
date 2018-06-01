@@ -75,6 +75,10 @@ Windows server Powershell configuration script enabling Ansible using ports 5985
 
 Manually disable Windows Updates:
 
+Windows + R, type Services.msc to open Services
+Windows Update > Properties > Startup type change to "Manual"
+
+
 
 ## How to perform Windows update
 
