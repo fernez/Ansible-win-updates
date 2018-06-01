@@ -5,14 +5,16 @@
    - 5%
    - 25%
   max_fail_percentage: 10%
+  #Variables definition - which kind of updates should be installed and current log path.
   vars:
     win_updates_categories:
       - CriticalUpdates
       - SecurityUpdates
+      - UpdateRollups
     log_path:
       - C:\Ansible_log\log.txt
   tasks:
-  # Check and show if there are missing updates
+  # Check and show if there are missing updates (for dry run only)
   - name: Check for missing updates.
     win_updates:
       state: searched
@@ -27,7 +29,9 @@
         var: update
     when: ansible_check_mode
 
+  # Block of tasks used to perform Windows update  
   - block:
+        #Windows update search
         - name: search_update
           win_updates:
             category_names: "{{ win_updates_categories }}"
@@ -35,7 +39,7 @@
             log_path: "{{ log_path }}"
           register: searched
         - debug: var=searched
-
+        #Windows update install
         - name: install_updates
           win_updates:
             category_names: "{{ win_updates_categories }}"
@@ -44,7 +48,7 @@
           when: searched.found_update_count > 0
           register: installed
         - debug: var=installed
-
+        #Reboot (if needed)
         - name: reboot
           win_reboot:
             pre_reboot_delay_sec: 0
