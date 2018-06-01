@@ -1,7 +1,8 @@
 # Ansible win-update
 
 ## Ansible node setup
-===========================
+
+
 Description of configuration of master Ansible server for managing Windows servers.
  
 Checking actual image of Ubuntu using AWS CLI:
@@ -53,7 +54,8 @@ ansible winservers -m win_ping
 
 
 ## Win Managed Server
-===========================
+
+
 Description of configuration of managed Windows servers.
  
 Running Windows (not fully updated) AMI instance:
