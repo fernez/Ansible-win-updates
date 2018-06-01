@@ -22,15 +22,15 @@ Installation of mandatory software for Ansible server:
 Software needed for running Ansible including Python, Git, etc.
 Run the shell script:
 
-/nodes/Ansible/ansible_ubuntu_setup.sh
+/Nodes/Ansible/ansible_ubuntu_setup.sh
 
 Create new group called „winservers“ defined with variables used for technical account and SSL Windows Remote Management (WinRM) port specification
 (Copy group_vars directory into your Ansible directory /etc/ansible/):
-/nodes/Ansible/group_vars/winservers
+/Nodes/Ansible/group_vars/winservers
 
  
 Edit hosts file located in /etc/ansible/hosts, ADD windows servers group like it is in hosts file:
-/nodes/Ansible/hosts
+/Nodes/Ansible/hosts
  
 Heathcheck of Windows servers (all hosts should return SUCCESS):
 ansible winservers -m win_ping
@@ -47,7 +47,7 @@ aws ec2 run-instances --image-id ami-1ae05663 --count 1 --instance-type t2.mediu
 Configuration script:
 Windows server Powershell configuration script enabling Ansible using ports 5985, 5986, enabling some usefull tools like telnet client for debugging and creation of technical admin user for Ansible purposes.
 
-/nodes/Windows/ansible_setup.ps1
+/Nodes/Windows/ansible_setup.ps1
 
 *note: Edit password of technical user before running script
 

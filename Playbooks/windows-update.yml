@@ -16,7 +16,7 @@
   	state: searched
   	category_names: "{{ win_updates_categories }}"
   	log_path: C:\Ansible_log\log.txt
-	ignore_errors: ye
+	ignore_errors: yes
 	register: update
  
   - name: Show updates available
