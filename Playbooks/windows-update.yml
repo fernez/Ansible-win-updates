@@ -6,19 +6,52 @@
    - 25%
   max_fail_percentage: 10%
   vars:
-	win_updates_categories:
-  	- CriticalUpdates
-  	- SecurityUpdates
+    win_updates_categories:
+      - CriticalUpdates
+      - SecurityUpdates
+    log_path:
+      - C:\Ansible_log\log.txt
   tasks:
-  # Check if there are missing updates
+  # Check and show if there are missing updates
   - name: Check for missing updates.
-	win_updates:
-  	state: searched
-  	category_names: "{{ win_updates_categories }}"
-  	log_path: C:\Ansible_log\log.txt
-	ignore_errors: yes
-	register: update
- 
+    win_updates:
+      state: searched
+      category_names: "{{ win_updates_categories }}"
+      log_path: C:\Ansible_log\log.txt
+    ignore_errors: ye
+    register: update
+    when: ansible_check_mode
+
   - name: Show updates available
-	debug:
-    	var: update
+    debug:
+        var: update
+    when: ansible_check_mode
+
+  - block:
+        - name: search_update
+          win_updates:
+            category_names: "{{ win_updates_categories }}"
+            state: searched
+            log_path: "{{ log_path }}"
+          register: searched
+        - debug: var=searched
+
+        - name: install_updates
+          win_updates:
+            category_names: "{{ win_updates_categories }}"
+            state: installed
+            log_path:  "{{ log_path }}"
+          when: searched.found_update_count > 0
+          register: installed
+        - debug: var=installed
+
+        - name: reboot
+          win_reboot:
+            pre_reboot_delay_sec: 0
+            test_command: whoami
+            shutdown_timeout_sec: 3600
+            reboot_timeout_sec: 3600
+          when: installed.reboot_required
+          register: rebooted
+        - debug: var=rebooted
+    when: not ansible_check_mode
