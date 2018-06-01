@@ -82,6 +82,9 @@ Windows Update > Properties > Startup type change to "Manual"
 
 ## How to perform Windows update
 
+Windows update is performed by Ansible Playbook which can be found on location below. There are two kinds of behavior which depends on check mode (if its on or off).
+[/Playbooks/windows-update.yml](/Playbooks/windows-update.yml)
+
 ### Playbook dry run
 
 In dry-run (using --check option) the playbook contains only one task:
