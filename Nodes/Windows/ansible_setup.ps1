@@ -37,4 +37,18 @@ else {
  
 Write-Host "Ensuring password for $Username never expires."
 & WMIC USERACCOUNT WHERE "Name='$Username'" SET PasswordExpires=FALSE
+
+#Setup of log file and path
+Write-Host "Setting up log file path and file."
+	$log_path = "C:\Ansible_log"
+	$log_file = "log.txt"
+	$Acl = Get-ACL $log_path
+	New-Item -Path $log_path -type directory | Out-Null
+	$Acl = Get-ACL $log_path
+	$AccessRule= New-Object System.Security.AccessControl.FileSystemAccessRule("everyone","full","ContainerInherit,Objectinherit","none","Allow")
+	$Acl.AddAccessRule($AccessRule)
+	Set-Acl $log_path $Acl
+	echo "Very beginning of a log file" > $log_path\$log_file
+	
+Write-Host "All done."
  
