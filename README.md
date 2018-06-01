@@ -1,6 +1,6 @@
 # Ansible win-update
-===========================
-====Ansible node setup=====
+
+====Ansible node setup====
 ===========================
 Description of configuration of master Ansible server for managing Windows servers.
  
@@ -36,8 +36,8 @@ Heathcheck of Windows servers (all hosts should return SUCCESS):
 ansible winservers -m win_ping
 
 
-===========================
-=====Win Managed Server====
+
+====Win Managed Server====
 ===========================
 Description of configuration of managed Windows servers.
  
