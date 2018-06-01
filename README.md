@@ -76,7 +76,7 @@ Windows server Powershell configuration script enabling Ansible using ports 5985
 Manually disable Windows Updates:
 
 
-## Run Ansible Playbook
+## How to perform Windows update
 
 ### Playbook dry run
 
