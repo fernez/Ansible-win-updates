@@ -49,13 +49,15 @@
           register: installed
         - debug: var=installed
         #Reboot (if needed)
-        - name: reboot
-          win_reboot:
-            pre_reboot_delay_sec: 0
-            test_command: whoami
-            shutdown_timeout_sec: 3600
-            reboot_timeout_sec: 3600
-          when: installed.reboot_required
-          register: rebooted
-        - debug: var=rebooted
+        - block:
+            - name: reboot
+              win_reboot:
+                pre_reboot_delay_sec: 0
+                test_command: whoami
+                shutdown_timeout_sec: 3600
+                reboot_timeout_sec: 3600
+              when: installed.reboot_required
+              register: rebooted
+            - debug: var=rebooted
+          when: searched.found_update_count > 0
     when: not ansible_check_mode
