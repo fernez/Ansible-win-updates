@@ -53,7 +53,7 @@ ansible winservers -m win_ping
 ```
 
 
-## Win Managed Server
+## Windows node setup
 
 
 Description of configuration of managed Windows servers.
